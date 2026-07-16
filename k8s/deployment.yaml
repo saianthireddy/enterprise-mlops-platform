@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlops-platform
+  labels:
+    app: mlops-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mlops-platform
+  template:
+    metadata:
+      labels:
+        app: mlops-platform
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/saianthireddy/enterprise-mlops-platform:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: mlops-platform-secrets
+                optional: true
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
