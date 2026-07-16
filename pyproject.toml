@@ -1,0 +1,16 @@
+[project]
+name = "enterprise-mlops-platform"
+version = "1.0.0"
+description = "Enterprise MLOps Platform: automated training, model registry, drift detection, CI/CD"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
