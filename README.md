@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/saianthireddy/enterprise-mlops-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/saianthireddy/enterprise-mlops-platform/actions/workflows/ci.yml) [![Retraining](https://github.com/saianthireddy/enterprise-mlops-platform/actions/workflows/train.yml/badge.svg)](https://github.com/saianthireddy/enterprise-mlops-platform/actions/workflows/train.yml) [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)](https://github.com/saianthireddy/enterprise-mlops-platform) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**Production-grade MLOps platform** — automated training with champion/challenger promotion, a versioned model registry, statistical drift detection (PSI + KS), Slack alerting, Kubernetes manifests, and a SageMaker deployment adapter. The full model lifecycle, from commit to monitored production endpoint.
+**Production-grade MLOps platform** — automated training with champion/challenger promotion, a versioned model registry, statistical drift detection (PSI + KS), Slack alerting, Kubernetes manifests, and a SageMaker deployment adapter that uploads the production artifact to S3. The full model lifecycle, from commit to a served model.
 
 ## Architecture
 
@@ -13,7 +13,7 @@ flowchart TB
     TP --> REG[("Model registry<br/>versions · stages · metrics")]
     REG --> DOCKER["Docker image"]
     DOCKER --> K8S["Kubernetes<br/>deployment · HPA · probes"]
-    REG --> SM["AWS SageMaker<br/>endpoint deploy"]
+    REG --> SM["AWS SageMaker<br/>artifact upload to S3"]
     K8S --> MON["Monitoring<br/>PSI + KS drift detection"]
     SM --> MON
     MON -->|drift detected| ALERT["Slack alerts"]
